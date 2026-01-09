@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuzieAI - Team</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .bottom-nav-content {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.8rem 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Dashboard Card */
+        .dashboard-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        /* Income Summary */
+        .income-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .income-card {
+            background: linear-gradient(135deg, var(--success), var(--primary));
+            padding: 2rem;
+            border-radius: var(--radius);
+            color: white;
+            text-align: center;
+        }
+        
+        .income-card h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        .income-card .amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        /* Invite Section */
+        .invite-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .invite-section h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .invite-link-container {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .invite-link {
+            flex: 1;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 2px solid #e5e7eb;
+            font-family: monospace;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Band Grid */
+        .band-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .band-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+        
+        .band-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .band-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .band-icon {
+            font-size: 2rem;
+        }
+        
+        .band-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .band-details {
+            margin-top: 1rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .detail-row .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .detail-row .value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .income-summary {
+                grid-template-columns: 1fr;
+            }
+            
+            .invite-link-container {
+                flex-direction: column;
+            }
+            
+            .band-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="top-nav-content">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tasks.html">Tasks</a>
+                <a href="rewards.html">Rewards</a>
+                <a href="team.html" class="active">Team</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-card">
+            <h2>👥 Team Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon">
+			                    <div class="icon">👥</div>
+                    <h3>Total Members</h3>
+                    <div class="value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📈</div>
+                    <h3>Added Today</h3>
+                    <div class="value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <h3>This Week</h3>
+                    <div class="value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📉</div>
+                    <h3>Last Week</h3>
+                    <div class="value">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="income-summary">
+            <div class="income-card">
+                <h3>Total User Income</h3>
+                <div class="amount">$0.00</div>
+            </div>
+            <div class="income-card" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                <h3>Today's Income</h3>
+                <div class="amount">$0.00</div>
+            </div>
+        </div>
+
+        <div class="invite-section">
+            <h3>🔗 Your Invite Link</h3>
+            <div class="invite-link-container">
+                <div class="invite-link">https://suzieai.club/ref/158447</div>
+                <button class="copy-btn" onclick="copyInviteLink()">📋 Copy</button>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>🎯 Band Management</h2>
+            <div class="band-grid">
+                <div class="band-card">
+                    <div class="band-header">
+                        <span class="band-icon">🥇</span>
+                        <h3>Band 1</h3>
+                    </div>
+                    <div class="band-details">
+                        <div class="detail-row">
+                            <span class="label">Total Members</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Team Commission</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Today's Income</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="band-card">
+                    <div class="band-header">
+                        <span class="band-icon">🥈</span>
+                        <h3>Band 2</h3>
+                    </div>
+                    <div class="band-details">
+                        <div class="detail-row">
+                            <span class="label">Total Members</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Team Commission</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Today's Income</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="band-card">
+                    <div class="band-header">
+                        <span class="band-icon">🥉</span>
+                        <h3>Band 3</h3>
+                    </div>
+                    <div class="band-details">
+                        <div class="detail-row">
+                            <span class="label">Total Members</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Team Commission</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Today's Income</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="band-card">
+                    <div class="band-header">
+                        <span class="band-icon">🏅</span>
+                        <h3>Band 4</h3>
+                    </div>
+                    <div class="band-details">
+                        <div class="detail-row">
+                            <span class="label">Total Members</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Team Commission</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Today's Income</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="band-card">
+                    <div class="band-header">
+                        <span class="band-icon">🎖️</span>
+                        <h3>Band 5</h3>
+                    </div>
+                    <div class="band-details">
+                        <div class="detail-row">
+                            <span class="label">Total Members</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Team Commission</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Today's Income</span>
+                            <span class="value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="bottom-nav-content">
+            <a href="index.html" class="bottom-nav-item">
+                <span class="icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="tasks.html" class="bottom-nav-item">
+                <span class="icon">📋</span>
+                <span>Tasks</span>
+            </a>
+            <a href="rewards.html" class="bottom-nav-item">
+                <span class="icon">🎯</span>
+                <span>Service</span>
+            </a>
+            <a href="team.html" class="bottom-nav-item active">
+                <span class="icon">🎪</span>
+                <span>Activities</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SuzieAI</h3>
+                <p>AI-powered earning platform with intelligent automation.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="tasks.html">Tasks</a>
+                <a href="rewards.html">Rewards</a>
+                <a href="team.html">Team</a>
+                <a href="profile.html">Profile</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="about.html">About Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 SuzieAI.club • All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyInviteLink() {
+            const link = document.querySelector('.invite-link').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.style.background = 'var(--success)';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'var(--primary)';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuzieAI - Withdrawal</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Balance Display */
+        .balance-display {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .balance-display h3 {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+                        letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .balance-display .amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        /* Withdrawal Card */
+        .withdrawal-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .withdrawal-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Form Group */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--radius);
+            transition: 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-group .helper-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+        
+        /* Amount Input */
+        .amount-input-container {
+            position: relative;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        
+        .amount-input {
+            padding-left: 2.5rem !important;
+            font-size: 1.5rem !important;
+            font-weight: 600;
+        }
+        
+        /* Quick Amount Buttons */
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .quick-amount-btn {
+            padding: 0.8rem;
+            background: var(--light);
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .quick-amount-btn:hover {
+            border-color: var(--primary);
+            background: white;
+        }
+        
+        .withdraw-all-btn {
+            grid-column: span 3;
+            background: var(--warning);
+            color: white;
+        }
+        
+        .withdraw-all-btn:hover {
+            background: #d97706;
+            border-color: #d97706;
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: #dbeafe;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .info-box h4 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-box p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border-left-color: var(--warning);
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--warning), var(--accent));
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .submit-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .quick-amounts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .withdraw-all-btn {
+                grid-column: span 2;
+            }
+            
+            .balance-display .amount {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="top-nav-content">
+            <a href="profile.html" class="back-btn">←</a>
+            <h1 class="page-title">Withdrawal</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="balance-display">
+            <h3>Available Balance</h3>
+            <div class="amount">$0.00</div>
+        </div>
+
+        <div class="withdrawal-card">
+            <h3>💰 Withdrawal Request</h3>
+            
+            <div class="form-group">
+                <label for="method">Withdrawal Method</label>
+                <select id="method">
+                    <option value="">Select Method</option>
+                    <option value="crypto">Cryptocurrency (USDT/BTC/ETH)</option>
+                    <option value="bank">Bank Transfer</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Wallet Address / Account Number</label>
+                <input type="text" id="address" placeholder="Enter your wallet address or account number">
+                <span class="helper-text">Make sure the address is correct. Transactions cannot be reversed.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Withdrawal Amount</label>
+                <div class="amount-input-container">
+                    <span class="currency-symbol">$</span>
+                    <input type="number" id="amount" class="amount-input" placeholder="0.00" min="10" step="0.01">
+                </div>
+                <div class="quick-amounts">
+                    <button class="quick-amount-btn" onclick="setAmount(50)">$50</button>
+                    <button class="quick-amount-btn" onclick="setAmount(100)">$100</button>
+                    <button class="quick-amount-btn" onclick="setAmount(500)">$500</button>
+                    <button class="quick-amount-btn" onclick="setAmount(1000)">$1,000</button>
+                    <button class="quick-amount-btn" onclick="setAmount(5000)">$5,000</button>
+		    <button class="quick-amount-btn" onclick="setAmount(5000)">$10,000</button>
+                    <button class="quick-amount-btn withdraw-all-btn" onclick="withdrawAll()">Withdraw All</button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ Withdrawal Information</h4>
+                <p>
+                    • Minimum withdrawal: $10<br>
+                    • Processing time: 1-24 hours<br>
+                    • Withdrawal fee: 2% (minimum $1)<br>
+                    • Daily limit: $10,000
+                </p>
+            </div>
+
+            <div class="warning-box info-box">
+                <h4>⚠️ Important Notice</h4>
+                <p>
+                    Please double-check your wallet address before submitting. 
+                    Cryptocurrency transactions are irreversible. 
+                    We are not responsible for funds sent to incorrect addresses.
+                </p>
+            </div>
+
+            <button class="submit-btn" onclick="submitWithdrawal()">Submit Withdrawal Request</button>
+        </div>
+    </div>
+
+    <script>
+        // Set quick amount
+        function setAmount(value) {
+            document.getElementById('amount').value = value;
+        }
+
+        // Withdraw all available balance
+        function withdrawAll() {
+            // In a real application, this would get the actual balance
+            document.getElementById('amount').value = 0;
+            alert('This will withdraw your entire available balance');
+        }
+
+        // Submit withdrawal
+        function submitWithdrawal() {
+            const method = document.getElementById('method').value;
+            const address = document.getElementById('address').value;
+            const amount = document.getElementById('amount').value;
+            
+            if (!method) {
+                alert('Please select a withdrawal method');
+                return;
+            }
+            
+            if (!address) {
+                alert('Please enter your wallet address or account number');
+                return;
+            }
+            
+            if (!amount || amount < 10) {
+                alert('Minimum withdrawal amount is $10');
+                return;
+            }
+            
+            if (confirm(`Confirm withdrawal of $${amount} via ${method}?\n\nAddress: ${address}`)) {
+                alert('Withdrawal request submitted successfully!\n\nProcessing time: 1-24 hours');
+                // Add actual withdrawal logic here
+                window.location.href = 'profile.html';
+            }
+        }
+    </script>
+</body>
+</html>

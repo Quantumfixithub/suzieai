@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuzieAI - How It Works</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .top-nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .hero-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-card h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-card p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        
+        .steps-section {
+            margin-bottom: 3rem;
+        }
+        
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: var(--shadow);
+        }
+        
+        .step-content {
+            margin-left: 80px;
+        }
+        
+        .step-content h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .step-content p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-content ul li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--gray);
+        }
+        
+        .step-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .income-breakdown {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .income-breakdown h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .income-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .income-source {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .income-source h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .income-source p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .income-source .percentage {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        
+        .calculator-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .calculator-card h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .calculator-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .calculator-input label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--radius);
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .result-display {
+            background: linear-gradient(135deg, var(--success), var(--primary));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-display.show {
+            display: block;
+        }
+        
+        .result-display h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-display .amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-display p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .faq-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-section h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 0;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        @media (max-width: 768px) {
+            .step-content {
+                margin-left: 0;
+                margin-top: 60px;
+            }
+            
+            .step-number {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-card h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="top-nav-content">
+            <a href="index.html" class="back-btn">←</a>
+            <h1 class="page-title">How It Works</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero-card">
+            <h1>🤖 How SuzieAI Helps You Earn</h1>
+            <p>
+                SuzieAI uses advanced artificial intelligence and automated trading algorithms to generate passive income 
+                for our members. Here's a complete breakdown of how our platform works and how you can start earning today.
+            </p>
+        </div>
+
+        <!-- Step-by-Step Process -->
+        <div class="steps-section">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h2>Create Your Account</h2>
+                    <p>
+                        Sign up in less than 2 minutes. We only need basic information to get you started. 
+                        Your account is protected with industry-standard security measures including 2FA.
+                    </p>
+                    <ul>
+                        <li>Simple registration process</li>
+			                        <li>Email verification for security</li>
+                        <li>Optional KYC for higher limits</li>
+                        <li>Instant account activation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h2>Make Your First Deposit</h2>
+                    <p>
+                        Fund your account using multiple payment methods. We support cryptocurrency (USDT, BTC, ETH), 
+                        bank transfers, and major credit/debit cards. Minimum deposit is just $10.
+                    </p>
+                    <ul>
+                        <li>Multiple payment options available</li>
+                        <li>Instant cryptocurrency deposits</li>
+                        <li>Bank transfers processed within 24 hours</li>
+                        <li>Secure payment gateway with SSL encryption</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h2>Choose Your Income Strategy</h2>
+                    <p>
+                        Select from our range of AI-powered robots and VIP subscription plans. 
+                        Each option offers different earning rates, durations, and investment levels.
+                    </p>
+                    <ul>
+                        <li><strong>AI Robots (S, U, Z, I, E):</strong> Automated trading bots with 30-365 day cycles</li>
+                        <li><strong>VIP Plans (1-5):</strong> Subscription-based daily income from $0.50 to $40/day</li>
+                        <li><strong>Referral System:</strong> Earn up to 15% commission on team deposits</li>
+                        <li><strong>Weekly Salaries:</strong> Additional income based on team performance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h2>Watch Your Earnings Grow</h2>
+                    <p>
+                        Once activated, your chosen robots and VIP plans work 24/7 to generate income. 
+                        Track your earnings in real-time through your dashboard.
+                    </p>
+                    <ul>
+                        <li>Daily income automatically credited to your account</li>
+                        <li>Real-time performance tracking and analytics</li>
+                        <li>Detailed transaction history</li>
+                        <li>Mobile-friendly dashboard accessible anywhere</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h2>Withdraw Your Profits</h2>
+                    <p>
+                        Request withdrawals anytime with no hidden fees. We process requests within 1-24 hours 
+                        depending on the payment method.
+                    </p>
+                    <ul>
+                        <li>Minimum withdrawal: $10</li>
+                        <li>Transparent fee structure (2% processing fee)</li>
+                        <li>Multiple withdrawal methods available</li>
+                        <li>Fast processing times (1-24 hours)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Income Sources Breakdown -->
+        <div class="income-breakdown">
+            <h2>💰 Income Sources Explained</h2>
+            <div class="income-grid">
+                <div class="income-source">
+                    <h3>🤖 Robot Earnings</h3>
+                    <span class="percentage">1.5% - 4% Daily</span>
+                    <p>
+                        Our AI trading robots analyze market data 24/7 and execute profitable trades automatically. 
+                        Returns vary based on market conditions and robot type selected.
+                    </p>
+                    <p><strong>How it works:</strong> Machine learning algorithms identify trading opportunities 
+                    in cryptocurrency markets, executing trades with minimal risk exposure.</p>
+                </div>
+
+                <div class="income-source">
+                    <h3>💎 VIP Daily Income</h3>
+                    <span class="percentage">$0.50 - $40/Day</span>
+                    <p>
+                        VIP subscriptions provide guaranteed daily income based on your plan level. 
+                        Higher tiers unlock better earning rates and exclusive benefits.
+                    </p>
+                    <p><strong>How it works:</strong> Your subscription fee funds a diversified investment pool 
+                    managed by our AI systems, generating stable daily returns.</p>
+                </div>
+
+                <div class="income-source">
+                    <h3>👥 Referral Commissions</h3>
+                    <span class="percentage">Up to 15%</span>
+                    <p>
+                        Earn commission on every deposit made by your direct referrals and up to 5 levels deep. 
+                        Build a team to multiply your passive income.
+                    </p>
+                    <p><strong>How it works:</strong> Share your unique referral link. When someone signs up 
+                    and deposits, you earn a percentage instantly credited to your account.</p>
+                </div>
+
+                <div class="income-source">
+                    <h3>💵 Weekly Salary</h3>
+                    <span class="percentage">$50 - $5,000/Week</span>
+                    <p>
+                        Team leaders earn weekly salaries based on their team's total deposits and active members. 
+                        Achieve higher ranks for bigger rewards.
+                    </p>
+                    <p><strong>How it works:</strong> As your team grows and deposits more, you climb the 
+                    leadership ranks earning progressively higher weekly salaries.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROI Calculator -->
+        <div class="calculator-card">
+            <h2>📊 Calculate Your Potential Earnings</h2>
+            
+            <div class="calculator-input">
+                <label for="investmentAmount">Initial Investment ($)</label>
+                <input type="number" id="investmentAmount" placeholder="Enter amount (minimum $10)" min="10" value="100">
+            </div>
+
+            <div class="calculator-input">
+                <label for="investmentType">Investment Type</label>
+                <select id="investmentType">
+                    <option value="robot-s">S Robot (1.5% daily, 30 days)</option>
+                    <option value="robot-u">U Robot (2% daily, 60 days)</option>
+                    <option value="robot-z">Z Robot (2.5% daily, 90 days)</option>
+                    <option value="robot-i">I Robot (3% daily, 180 days)</option>
+                    <option value="robot-e">E Robot (4% daily, 365 days)</option>
+                    <option value="vip-1">VIP Level 1 ($0.50/day)</option>
+                    <option value="vip-2">VIP Level 2 ($2/day)</option>
+                    <option value="vip-3">VIP Level 3 ($8/day)</option>
+                    <option value="vip-4">VIP Level 4 ($20/day)</option>
+                    <option value="vip-5">VIP Level 5 ($40/day)</option>
+                </select>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateROI()">Calculate Potential Returns</button>
+
+            <div class="result-display" id="resultDisplay">
+                <h3>Your Estimated Earnings</h3>
+                <div class="amount" id="totalEarnings">$0.00</div>
+                <p id="earningsBreakdown">After <span id="duration"></span></p>
+                <p style="margin-top: 1rem; font-size: 0.85rem;">
+                    ⚠️ This is an estimate based on current rates. Actual earnings may vary based on market conditions.
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>How does the AI robot actually make money?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Our AI robots use machine learning algorithms to analyze cryptocurrency market data in real-time. 
+                    They identify profitable trading opportunities, execute trades automatically, and manage risk through 
+                    diversification. The robots trade on major exchanges using arbitrage strategies, trend analysis, 
+                    and pattern recognition to generate consistent returns.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>Is my investment guaranteed?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>No investment is guaranteed.</strong> Cryptocurrency markets are highly volatile and unpredictable. 
+                    While our AI systems are designed to minimize risk and maximize returns, losses are possible. 
+                    We recommend only investing money you can afford to lose and diversifying your investment portfolio.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>How long does it take to process withdrawals?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Withdrawal processing times vary by payment method:
+                    <br>• Cryptocurrency (USDT/BTC/ETH): 1-6 hours
+                    <br>• Bank Transfer: 1-3 business days
+                    <br>• PayPal: 2-24 hours
+                    <br><br>During high volume periods, processing may take slightly longer. We strive to process all 
+                    requests as quickly as possible.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>Can I have multiple robots running at once?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can purchase and run multiple robots simultaneously. Many successful users diversify 
+                    their investments across different robot types and VIP levels to maximize earning potential 
+                    while spreading risk. There's no limit to the number of active robots you can have.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>What happens if a robot doesn't perform well?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Robot performance can vary based on market conditions. While our AI systems are sophisticated, 
+                    they cannot guarantee profits every single day. If a robot consistently underperforms, 
+                    we may pause it temporarily and adjust the algorithms. Your initial investment is returned 
+                    at the end of the cycle period, regardless of daily performance fluctuations.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>How do I build a successful referral team?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Building a strong team requires:
+                    <br>1. Share your referral link on social media, forums, and with friends/family
+                    <br>2. Provide value by educating potential members about the platform
+                    <br>3. Support your team members and help them succeed
+                    <br>4. Stay active and lead by example
+                    <br>5. Use our marketing materials and success stories to attract quality members
+                    <br><br>Remember: quality over quantity. Active, engaged team members are more valuable than 
+                    large numbers of inactive users.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span>Is SuzieAI legal and regulated?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    SuzieAI operates in compliance with international cryptocurrency regulations. However, 
+                    cryptocurrency regulations vary by country. It's your responsibility to ensure that 
+                    participating in our platform is legal in your jurisdiction. We recommend consulting 
+                    with a local financial advisor or legal expert if you have concerns.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+            const answer = element.querySelector('.faq-answer');
+            answer.classList.toggle('show');
+        }
+
+        function calculateROI() {
+            const amount = parseFloat(document.getElementById('investmentAmount').value);
+            const type = document.getElementById('investmentType').value;
+            
+            if (!amount || amount < 10) {
+                alert('Please enter an investment amount of at least $10');
+                return;
+            }
+
+            let dailyRate, days, fixedDaily;
+            
+            switch(type) {
+                case 'robot-s':
+                    dailyRate = 0.015;
+                    days = 30;
+                    break;
+                case 'robot-u':
+                    dailyRate = 0.02;
+                    days = 60;
+                    break;
+                case 'robot-z':
+                    dailyRate = 0.025;
+                    days = 90;
+                    break;
+                case 'robot-i':
+                    dailyRate = 0.03;
+                    days = 180;
+                    break;
+                case 'robot-e':
+                    dailyRate = 0.04;
+                    days = 365;
+                    break;
+                case 'vip-1':
+                    fixedDaily = 0.50;
+                    days = 30;
+                    break;
+                case 'vip-2':
+                    fixedDaily = 2;
+                    days = 30;
+                    break;
+                case 'vip-3':
+                    fixedDaily = 8;
+                    days = 30;
+                    break;
+                case 'vip-4':
+                    fixedDaily = 20;
+                    days = 30;
+                    break;
+                case 'vip-5':
+                    fixedDaily = 40;
+                    days = 30;
+                    break;
+            }
+
+            let totalEarnings;
+            if (fixedDaily) {
+                totalEarnings = fixedDaily * days;
+            } else {
+                totalEarnings = amount * dailyRate * days;
+            }
+
+            const profitMargin = ((totalEarnings / amount) * 100).toFixed(1);
+            
+            document.getElementById('totalEarnings').textContent = '$' + totalEarnings.toFixed(2);
+            document.getElementById('duration').textContent = days + ' days';
+                        document.getElementById('earningsBreakdown').innerHTML = 
+                `After <span id="duration">${days} days</span> | ROI: ${profitMargin}% | Plus your initial $${amount.toFixed(2)} returned`;
+            
+            document.getElementById('resultDisplay').classList.add('show');
+            
+            // Scroll to results
+            document.getElementById('resultDisplay').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

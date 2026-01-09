@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuzieAI - Profile</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .bottom-nav-content {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.8rem 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Profile Header */
+        .profile-header {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .profile-header h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-level {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success), var(--primary));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            max-width: 400px;
+            margin: 1rem auto 0;
+        }
+        
+        .profile-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .profile-info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-info-row .label {
+            color: var(--gray);
+        }
+        
+        .profile-info-row .value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Balance Section */
+        .balance-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .balance-section h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+                .balance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .balance-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        
+        .balance-card h4 {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .balance-card .amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .balance-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .action-btn-large {
+            padding: 1rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        
+        .btn-recharge {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-recharge:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        .btn-withdraw {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-withdraw:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+        
+        /* Band Section */
+        .band-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .band-section h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .band-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .band-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+        
+        .band-item .band-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .band-item .band-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Menu Section */
+        .menu-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .menu-list {
+            display: grid;
+            gap: 0.5rem;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .menu-item:hover {
+            background: #e5e7eb;
+            transform: translateX(5px);
+        }
+        
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .menu-item-icon {
+            font-size: 1.5rem;
+        }
+        
+        .menu-item-text {
+            font-weight: 500;
+        }
+        
+        .menu-item-arrow {
+            color: var(--gray);
+        }
+        
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 3rem 1.5rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .balance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .balance-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="top-nav-content">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tasks.html">Tasks</a>
+                <a href="rewards.html">Rewards</a>
+                <a href="team.html">Team</a>
+                <a href="profile.html" class="active">Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <h2>Esom234</h2>
+            <span class="profile-level">Level 1</span>
+            <div class="profile-info">
+                <div class="profile-info-row">
+                    <span class="label">Email:</span>
+                    <span class="value">m****a@gmail.com</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="label">User ID:</span>
+                    <span class="value">158447</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="balance-section">
+            <h3>💰 Personal Balance</h3>
+            <div class="balance-grid">
+                <div class="balance-card">
+                    <h4>Balance</h4>
+                    <div class="amount">0 <small>USD</small></div>
+                </div>
+                <div class="balance-card">
+                    <h4>Wallet</h4>
+                    <div class="amount">0 <small>USD</small></div>
+                </div>
+                <div class="balance-card">
+                    <h4>Advertising</h4>
+                    <div class="amount">0 <small>USD</small></div>
+                </div>
+                <div class="balance-card">
+                    <h4>Total Income</h4>
+                    <div class="amount">0 <small>USD</small></div>
+                </div>
+            </div>
+            <div class="balance-actions">
+                <a href="deposit.html" class="action-btn-large btn-recharge">💳 Recharge</a>
+                <a href="withdrawal.html" class="action-btn-large btn-withdraw">💰 Withdraw</a>
+            </div>
+        </div>
+
+        <div class="band-section">
+            <h3>🎯 My Band</h3>
+            <div class="band-list">
+                <div class="band-item">
+                    <span class="band-name">Band Benefits</span>
+                    <span class="band-count">0.00</span>
+                </div>
+                <div class="band-item">
+                    <span class="band-name">🥇 Band 1</span>
+                    <span class="band-count">0</span>
+                </div>
+                <div class="band-item">
+                    <span class="band-name">🥈 Band 2</span>
+                    <span class="band-count">0</span>
+                </div>
+                <div class="band-item">
+                    <span class="band-name">🥉 Band 3</span>
+                    <span class="band-count">0</span>
+                </div>
+                <div class="band-item">
+                    <span class="band-name">🏅 Band 4</span>
+                    <span class="band-count">0</span>
+                </div>
+                <div class="band-item">
+                    <span class="band-name">🎖️ Band 5</span>
+                    <span class="band-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-list">
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">📚</span>
+                        <span class="menu-item-text">Tutorial</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">💵</span>
+                        <span class="menu-item-text">Financial Details</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">💼</span>
+                        <span class="menu-item-text">Wallet Management</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">🔐</span>
+                        <span class="menu-item-text">Password Management</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="team.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">👥</span>
+                        <span class="menu-item-text">Band Management</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">❓</span>
+                        <span class="menu-item-text">Help Center</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">🎁</span>
+                        <span class="menu-item-text">Band Benefits</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <span class="menu-item-icon">📱</span>
+                        <span class="menu-item-text">Download App</span>
+                    </div>
+                    <span class="menu-item-arrow">›</span>
+                </a>
+            </div>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="bottom-nav-content">
+            <a href="index.html" class="bottom-nav-item">
+                <span class="icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="tasks.html" class="bottom-nav-item">
+                <span class="icon">📋</span>
+                <span>Tasks</span>
+            </a>
+            <a href="rewards.html" class="bottom-nav-item">
+                <span class="icon">🎯</span>
+                <span>Service</span>
+            </a>
+            <a href="team.html" class="bottom-nav-item">
+                <span class="icon">🎪</span>
+                <span>Activities</span>
+            </a>
+            <a href="profile.html" class="bottom-nav-item active">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SuzieAI</h3>
+                <p>AI-powered earning platform with intelligent automation.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="tasks.html">Tasks</a>
+                <a href="rewards.html">Rewards</a>
+                <a href="team.html">Team</a>
+                <a href="profile.html">Profile</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="about.html">About Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+                        <p>© 2024 SuzieAI.club • All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Add logout logic here
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
