@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invite Friends - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; padding-bottom: 20px; }
+        .header { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: none; border: none; color: #D4AF37; font-size: 24px; cursor: pointer; text-decoration: none; }
+        .header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #D4AF37; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .invite-hero { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); border-radius: 20px; padding: 30px; text-align: center; color: #fff; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .invite-hero::after { content: '🎁'; position: absolute; right: -10px; bottom: -10px; font-size: 100px; opacity: 0.1; }
+        .invite-icon { font-size: 48px; margin-bottom: 15px; }
+        .invite-title { font-size: 24px; font-weight: 700; color: #D4AF37; font-family: 'Cormorant Garamond', serif; margin-bottom: 10px; }
+        .invite-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+        .card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .section-title { font-size: 18px; font-weight: 600; color: #0A1628; margin-bottom: 15px; }
+        .referral-code-box { background: rgba(212, 175, 55, 0.1); border: 2px dashed #D4AF37; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
+        .referral-code-label { font-size: 12px; color: #999; margin-bottom: 8px; }
+        .referral-code { font-size: 32px; font-weight: 700; color: #D4AF37; font-family: 'Courier New', monospace; letter-spacing: 4px; margin-bottom: 15px; }
+        .copy-btn { width: 100%; padding: 12px; background: #D4AF37; color: #0A1628; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .copy-btn:hover { background: #F4E4A6; }
+        .referral-link { background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 10px; word-break: break-all; font-size: 13px; color: #666; margin-bottom: 10px; }
+        .share-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+        .share-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 15px 10px; background: #fff; border: 2px solid #f0f0f0; border-radius: 12px; cursor: pointer; text-decoration: none; color: #333; transition: all 0.3s; }
+        .share-btn:hover { border-color: #D4AF37; background: rgba(212, 175, 55, 0.05); transform: translateY(-2px); }
+        .share-icon { font-size: 28px; }
+        .share-label { font-size: 11px; font-weight: 600; }
+        .commission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .commission-box { background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; text-align: center; }
+        .commission-level { font-size: 12px; color: #999; margin-bottom: 5px; }
+        .commission-rate { font-size: 24px; font-weight: 700; color: #D4AF37; }
+        .info-box { background: rgba(212, 175, 55, 0.1); border-left: 4px solid #D4AF37; padding: 15px; border-radius: 8px; font-size: 13px; color: #0A1628; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="team.html" class="back-btn">←</a>
+        <div class="header-title">Invite Friends</div>
+    </div>
+
+    <div class="container">
+        <div class="invite-hero">
+            <div class="invite-icon">🎁</div>
+            <div class="invite-title">Earn Up to 8% Commission</div>
+            <div class="invite-subtitle">Invite friends and earn from their investments</div>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Your Referral Code</h3>
+            <div class="referral-code-box">
+                <div class="referral-code-label">Share this code with friends</div>
+                <div class="referral-code" id="refCode">SUZIAI123</div>
+                <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+            </div>
+
+            <div class="referral-code-label">Or share this link:</div>
+            <div class="referral-link" id="refLink">https://suziai.com/register?ref=SUZIAI123</div>
+            <button class="copy-btn" onclick="copyLink()">🔗 Copy Link</button>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Share via</h3>
+            <div class="share-grid">
+                <a href="#" class="share-btn" onclick="share('whatsapp')">
+                    <div class="share-icon">💬</div>
+                    <div class="share-label">WhatsApp</div>
+                </a>
+                <a href="#" class="share-btn" onclick="share('telegram')">
+                    <div class="share-icon">✈️</div>
+                    <div class="share-label">Telegram</div>
+                </a>
+                <a href="#" class="share-btn" onclick="share('facebook')">
+                    <div class="share-icon">📘</div>
+                    <div class="share-label">Facebook</div>
+                </a>
+                <a href="#" class="share-btn" onclick="share('twitter')">
+                    <div class="share-icon">🐦</div>
+                    <div class="share-label">Twitter</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Commission Rates</h3>
+            <div class="commission-grid">
+                <div class="commission-box">
+                    <div class="commission-level">Level 1</div>
+                    <div class="commission-rate">8%</div>
+                </div>
+                <div class="commission-box">
+                    <div class="commission-level">Level 2</div>
+                    <div class="commission-rate">3%</div>
+                </div>
+                <div class="commission-box">
+                    <div class="commission-level">Level 3</div>
+                    <div class="commission-rate">2%</div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>How it works:</strong><br>
+                • Level 1: Direct referrals (8%)<br>
+                • Level 2: Referrals of your referrals (3%)<br>
+                • Level 3: Third generation (2%)<br>
+                • Earn from all their investments!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const refCode = 'SUZIAI123';
+        const refLink = `https://suziai.com/register?ref=${refCode}`;
+
+        function copyCode() {
+            navigator.clipboard.writeText(refCode).then(() => {
+                alert('Referral code copied!');
+            });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(refLink).then(() => {
+                alert('Referral link copied!');
+            });
+        }
+
+        function share(platform) {
+            const message = `Join SUZIAI and start earning! Use my code: ${refCode} or click: ${refLink}`;
+            
+            switch(platform) {
+                case 'whatsapp':
+                    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
+                    break;
+                case 'telegram':
+                    window.open(`https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${encodeURIComponent('Join SUZIAI!')}`);
+                    break;
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(refLink)}`);
+                    break;
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`);
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

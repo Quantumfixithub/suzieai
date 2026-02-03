@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Information - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 8px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #0A1628;
+        }
+
+        .bank-card {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-card::after {
+            content: '🏦';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 80px;
+            opacity: 0.1;
+        }
+
+        .bank-card-header {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .bank-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bank-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bank-detail {
+            font-size: 13px;
+        }
+
+        .bank-detail-label {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+        }
+
+        .bank-detail-value {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .bank-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bank-action-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bank-action-btn:hover {
+            background: #D4AF37;
+            color: #0A1628;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #D4AF37;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            background: #fff;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: #333;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%);
+            border: none;
+            border-radius: 12px;
+            color: #0A1628;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            border: 2px solid #D4AF37;
+            color: #D4AF37;
+        }
+
+        .error-message, .success-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff6b6b;
+        }
+
+        .success-message {
+            background: rgba(76, 217, 100, 0.1);
+            border: 1px solid rgba(76, 217, 100, 0.3);
+            color: #4cd964;
+        }
+
+        .no-bank {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .no-bank-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .no-bank h3 {
+            color: #0A1628;
+            margin-bottom: 8px;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #0A1628;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #addBankForm {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .bank-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="mine.html" class="back-btn">←</a>
+        <div class="header-title">Bank Information</div>
+    </div>
+
+    <div class="container">
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <!-- Saved Bank Card -->
+        <div id="savedBankSection" style="display: none;">
+            <div class="bank-card">
+                <div class="bank-card-header">Primary Bank Account</div>
+                <div class="bank-name" id="bankName">ABC Bank</div>
+                <div class="bank-details">
+                    <div class="bank-detail">
+                        <div class="bank-detail-label">Account Number</div>
+                        <div class="bank-detail-value" id="accountNumber">**** **** 1234</div>
+                    </div>
+                    <div class="bank-detail">
+                        <div class="bank-detail-label">Account Name</div>
+                        <div class="bank-detail-value" id="accountName">John Doe</div>
+                    </div>
+                </div>
+                <div class="bank-actions">
+                    <div class="bank-action-btn" onclick="editBank()">✏️ Edit</div>
+                    <div class="bank-action-btn" onclick="removeBank()">🗑️ Remove</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Bank Section -->
+        <div class="card" id="noBankSection">
+            <div class="no-bank">
+                <div class="no-bank-icon">🏦</div>
+                <h3>No Bank Account Added</h3>
+                <p>Add your bank account to receive withdrawals</p>
+            </div>
+            <button class="btn" onclick="showAddBankForm()">Add Bank Account</button>
+        </div>
+
+        <!-- Add/Edit Bank Form -->
+        <div class="card" id="addBankForm">
+            <h2 class="section-title">Add Bank Account</h2>
+            <p class="section-subtitle">Enter your bank account details for withdrawals</p>
+
+            <div class="info-box">
+                💡 Make sure the account name matches your registered name on SUZIAI
+            </div>
+
+            <form id="bankForm">
+                <div class="form-group">
+                    <label for="bankNameInput">Bank Name</label>
+                    <select id="bankNameInput" required>
+                        <option value="">Select your bank</option>
+                        <option value="ABC Bank">ABC Bank</option>
+                        <option value="XYZ Bank">XYZ Bank</option>
+                        <option value="First National Bank">First National Bank</option>
+                        <option value="Global Trust Bank">Global Trust Bank</option>
+                        <option value="Commerce Bank">Commerce Bank</option>
+                        <option value="People's Bank">People's Bank</option>
+                        <option value="United Bank">United Bank</option>
+                        <option value="Metropolitan Bank">Metropolitan Bank</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountNameInput">Account Name</label>
+                    <input 
+                        type="text" 
+                        id="accountNameInput" 
+                        placeholder="Enter account holder name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="accountNumberInput">Account Number</label>
+                    <input 
+                        type="text" 
+                        id="accountNumberInput" 
+                        placeholder="Enter account number"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="accountTypeInput">Account Type</label>
+                    <select id="accountTypeInput" required>
+                        <option value="">Select account type</option>
+                        <option value="Savings">Savings Account</option>
+                        <option value="Current">Current Account</option>
+                        <option value="Checking">Checking Account</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="routingNumber">Routing Number (Optional)</label>
+                    <input 
+                        type="text" 
+                        id="routingNumber" 
+                        placeholder="Enter routing number if applicable"
+                    >
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">Save Bank Account</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelAddBank()" style="margin-top: 10px;">Cancel</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Important Information</h3>
+            <div class="info-box">
+                <strong>Security Notice:</strong><br>
+                • Your bank details are encrypted and secure<br>
+                • We never share your information with third parties<br>
+                • Only use this for withdrawal purposes<br>
+                • Verify all details before saving
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hasBankAccount = false;
+
+        window.addEventListener('load', function() {
+            checkBankAccount();
+        });
+
+        function checkBankAccount() {
+            // Check if user has saved bank account (from localStorage or API)
+            const savedBank = localStorage.getItem('bankAccount');
+            
+            if (savedBank) {
+                const bankData = JSON.parse(savedBank);
+                displaySavedBank(bankData);
+            } else {
+                document.getElementById('noBankSection').style.display = 'block';
+            }
+        }
+
+        function displaySavedBank(bankData) {
+            hasBankAccount = true;
+            document.getElementById('savedBankSection').style.display = 'block';
+            document.getElementById('noBankSection').style.display = 'none';
+            
+            document.getElementById('bankName').textContent = bankData.bankName;
+            document.getElementById('accountNumber').textContent = maskAccountNumber(bankData.accountNumber);
+            document.getElementById('accountName').textContent = bankData.accountName;
+        }
+
+        function maskAccountNumber(number) {
+            return '**** **** ' + number.slice(-4);
+        }
+
+        function showAddBankForm() {
+            document.getElementById('noBankSection').style.display = 'none';
+            document.getElementById('addBankForm').style.display = 'block';
+        }
+
+        function cancelAddBank() {
+            document.getElementById('addBankForm').style.display = 'none';
+            if (hasBankAccount) {
+                document.getElementById('savedBankSection').style.display = 'block';
+            } else {
+                document.getElementById('noBankSection').style.display = 'block';
+            }
+            document.getElementById('bankForm').reset();
+        }
+
+        function editBank() {
+            const savedBank = JSON.parse(localStorage.getItem('bankAccount'));
+            
+            document.getElementById('bankNameInput').value = savedBank.bankName;
+            document.getElementById('accountNameInput').value = savedBank.accountName;
+            document.getElementById('accountNumberInput').value = savedBank.accountNumber;
+            document.getElementById('accountTypeInput').value = savedBank.accountType;
+            document.getElementById('routingNumber').value = savedBank.routingNumber || '';
+            
+            document.getElementById('savedBankSection').style.display = 'none';
+            document.getElementById('addBankForm').style.display = 'block';
+        }
+
+        function removeBank() {
+            if (confirm('Are you sure you want to remove this bank account?')) {
+                localStorage.removeItem('bankAccount');
+                hasBankAccount = false;
+                document.getElementById('savedBankSection').style.display = 'none';
+                document.getElementById('noBankSection').style.display = 'block';
+                showSuccess('Bank account removed successfully');
+            }
+        }
+
+        // Form submission
+        document.getElementById('bankForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const bankName = document.getElementById('bankNameInput').value;
+            const accountName = document.getElementById('accountNameInput').value;
+            const accountNumber = document.getElementById('accountNumberInput').value;
+            const accountType = document.getElementById('accountTypeInput').value;
+            const routingNumber = document.getElementById('routingNumber').value;
+
+            const submitBtn = document.getElementById('submitBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            if (!bankName || !accountName || !accountNumber || !accountType) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            if (accountNumber.length < 8) {
+                showError('Please enter a valid account number');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loader"></span>Saving...';
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                const bankData = {
+                    bankName,
+                    accountName,
+                    accountNumber,
+                    accountType,
+                    routingNumber
+                };
+
+                localStorage.setItem('bankAccount', JSON.stringify(bankData));
+
+                showSuccess('Bank account saved successfully!');
+                
+                setTimeout(() => {
+                    document.getElementById('addBankForm').style.display = 'none';
+                    displaySavedBank(bankData);
+                    document.getElementById('bankForm').reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Save Bank Account';
+                }, 1500);
+            } catch (error) {
+                showError('An error occurred. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Save Bank Account';
+            }
+        });
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showSuccess(message) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Records - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; padding-bottom: 80px; }
+        .header { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: none; border: none; color: #D4AF37; font-size: 24px; cursor: pointer; text-decoration: none; }
+        .header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #D4AF37; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .filters { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; }
+        .filter-btn { padding: 8px 16px; background: #fff; border: 2px solid #f0f0f0; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .filter-btn.active { background: #D4AF37; color: #0A1628; border-color: #D4AF37; }
+        .record-card { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .record-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .record-type { font-size: 16px; font-weight: 600; color: #0A1628; }
+        .record-amount { font-size: 18px; font-weight: 700; }
+        .record-amount.positive { color: #4cd964; }
+        .record-amount.negative { color: #ff6b6b; }
+        .record-details { font-size: 13px; color: #666; margin-bottom: 8px; }
+        .record-footer { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #999; }
+        .status-badge { padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .status-completed { background: rgba(76, 217, 100, 0.1); color: #4cd964; }
+        .status-pending { background: rgba(255, 211, 61, 0.1); color: #ffd33d; }
+        .status-failed { background: rgba(255, 107, 107, 0.1); color: #ff6b6b; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #999; }
+        .empty-icon { font-size: 64px; margin-bottom: 15px; opacity: 0.5; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; display: flex; justify-content: space-around; padding: 12px 0 8px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #999; flex: 1; }
+        .nav-item.active { color: #D4AF37; }
+        .nav-icon { font-size: 24px; margin-bottom: 4px; }
+        .nav-label { font-size: 11px; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <div class="header-title">Transaction Records</div>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filter-btn active" onclick="filterRecords('all')">All</div>
+            <div class="filter-btn" onclick="filterRecords('deposit')">Deposit</div>
+            <div class="filter-btn" onclick="filterRecords('withdraw')">Withdraw</div>
+            <div class="filter-btn" onclick="filterRecords('earnings')">Earnings</div>
+            <div class="filter-btn" onclick="filterRecords('commission')">Commission</div>
+        </div>
+
+        <div id="recordsList">
+            <div class="record-card" data-type="deposit">
+                <div class="record-header">
+                    <div class="record-type">💳 Deposit</div>
+                    <div class="record-amount positive">+$500.00</div>
+                </div>
+                <div class="record-details">Bank Transfer • Ref: TXN123456789</div>
+                <div class="record-footer">
+                    <span>Today, 10:30 AM</span>
+                    <span class="status-badge status-completed">✓ Completed</span>
+                </div>
+            </div>
+
+            <div class="record-card" data-type="withdraw">
+                <div class="record-header">
+                    <div class="record-type">💸 Withdrawal</div>
+                    <div class="record-amount negative">-$200.00</div>
+                </div>
+                <div class="record-details">To Bank Account • Fee: $4.00</div>
+                <div class="record-footer">
+                    <span>Yesterday, 3:15 PM</span>
+                    <span class="status-badge status-pending">⏳ Processing</span>
+                </div>
+            </div>
+
+            <div class="record-card" data-type="earnings">
+                <div class="record-header">
+                    <div class="record-type">💰 VIP Returns</div>
+                    <div class="record-amount positive">+$45.50</div>
+                </div>
+                <div class="record-details">VIP Level 1 • Daily Return</div>
+                <div class="record-footer">
+                    <span>Yesterday, 9:00 AM</span>
+                    <span class="status-badge status-completed">✓ Completed</span>
+                </div>
+            </div>
+
+            <div class="record-card" data-type="commission">
+                <div class="record-header">
+                    <div class="record-type">👥 Referral Commission</div>
+                    <div class="record-amount positive">+$8.00</div>
+                </div>
+                <div class="record-details">Level 1 Commission • 8%</div>
+                <div class="record-footer">
+                    <span>2 days ago</span>
+                    <span class="status-badge status-completed">✓ Completed</span>
+                </div>
+            </div>
+
+            <div class="record-card" data-type="deposit">
+                <div class="record-header">
+                    <div class="record-type">₿ USDT Deposit</div>
+                    <div class="record-amount positive">+$1,000.00</div>
+                </div>
+                <div class="record-details">TRC20 • 100 USDT</div>
+                <div class="record-footer">
+                    <span>3 days ago</span>
+                    <span class="status-badge status-completed">✓ Completed</span>
+                </div>
+            </div>
+
+            <div class="record-card" data-type="earnings">
+                <div class="record-header">
+                    <div class="record-type">📊 Finance Returns</div>
+                    <div class="record-amount positive">+$25.00</div>
+                </div>
+                <div class="record-details">Premium Plan • Daily Return</div>
+                <div class="record-footer">
+                    <span>3 days ago</span>
+                    <span class="status-badge status-completed">✓ Completed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="vip.html" class="nav-item">
+            <div class="nav-icon">👑</div>
+            <div class="nav-label">VIP</div>
+        </a>
+        <a href="team.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="mine.html" class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Mine</div>
+        </a>
+    </div>
+
+    <script>
+        function filterRecords(type) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const records = document.querySelectorAll('.record-card');
+            records.forEach(record => {
+                if (type === 'all' || record.dataset.type === type) {
+                    record.style.display = 'block';
+                } else {
+                    record.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

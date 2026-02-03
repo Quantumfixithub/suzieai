@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; padding-bottom: 20px; }
+        .header { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: none; border: none; color: #D4AF37; font-size: 24px; cursor: pointer; text-decoration: none; }
+        .header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #D4AF37; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .section-title { font-size: 20px; font-weight: 600; color: #0A1628; margin-bottom: 15px; font-family: 'Cormorant Garamond', serif; }
+        .status-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+        .status-pending { background: rgba(255, 211, 61, 0.1); color: #ffd33d; }
+        .status-verified { background: rgba(76, 217, 100, 0.1); color: #4cd964; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #D4AF37; font-size: 14px; font-weight: 500; }
+        input, select { width: 100%; padding: 14px 18px; background: #fff; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; color: #333; font-size: 14px; font-family: 'Montserrat', sans-serif; }
+        input:focus, select:focus { outline: none; border-color: #D4AF37; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+        .upload-box { border: 2px dashed #D4AF37; border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .upload-box:hover { background: rgba(212, 175, 55, 0.05); }
+        .upload-icon { font-size: 48px; margin-bottom: 10px; }
+        .upload-text { font-size: 14px; color: #666; }
+        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%); border: none; border-radius: 12px; color: #0A1628; font-size: 16px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
+        .info-box { background: rgba(212, 175, 55, 0.1); border-left: 4px solid #D4AF37; padding: 15px; border-radius: 8px; font-size: 13px; color: #0A1628; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="settings.html" class="back-btn">←</a>
+        <div class="header-title">KYC Verification</div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">Identity Verification</h2>
+            <div class="status-badge status-pending">⏳ Not Verified</div>
+
+            <div class="info-box">
+                <strong>Why verify?</strong><br>
+                • Increase withdrawal limits<br>
+                • Enhanced account security<br>
+                • Access to premium features<br>
+                • Compliance with regulations
+            </div>
+
+            <form id="kycForm">
+                <div class="form-group">
+                    <label for="fullName">Full Legal Name</label>
+                    <input type="text" id="fullName" placeholder="As shown on ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idType">ID Type</label>
+                    <select id="idType" required>
+                        <option value="">Select ID type</option>
+                        <option value="passport">Passport</option>
+                        <option value="drivers">Driver's License</option>
+                        <option value="national">National ID Card</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="idNumber">ID Number</label>
+                    <input type="text" id="idNumber" placeholder="Enter ID number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Front of ID</label>
+                    <div class="upload-box" onclick="document.getElementById('frontFile').click()">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">Click to upload front of ID</div>
+                        <input type="file" id="frontFile" style="display: none;" accept="image/*" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Back of ID</label>
+                    <div class="upload-box" onclick="document.getElementById('backFile').click()">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">Click to upload back of ID</div>
+                        <input type="file" id="backFile" style="display: none;" accept="image/*" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Selfie with ID</label>
+                    <div class="upload-box" onclick="document.getElementById('selfieFile').click()">
+                        <div class="upload-icon">🤳</div>
+                        <div class="upload-text">Hold your ID next to your face</div>
+                        <input type="file" id="selfieFile" style="display: none;" accept="image/*" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Submit for Verification</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('kycForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('KYC documents submitted! Verification takes 24-48 hours.');
+            setTimeout(() => window.location.href = 'settings.html', 1500);
+        });
+
+        ['frontFile', 'backFile', 'selfieFile'].forEach(id => {
+            document.getElementById(id).addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const box = e.target.parentElement;
+                    box.querySelector('.upload-text').textContent = '✓ ' + e.target.files[0].name;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

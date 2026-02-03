@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Products - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #D4AF37;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0A1628;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .product-badge {
+            background: linear-gradient(135deg, #D4AF37, #F4E4A6);
+            color: #0A1628;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-box {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0A1628;
+        }
+
+        .detail-value.highlight {
+            color: #4cd964;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%);
+            border: none;
+            border-radius: 12px;
+            color: #0A1628;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 8px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #D4AF37;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <div class="header-title">Finance Products</div>
+    </div>
+
+    <div class="container">
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-name">Premium Plan</div>
+                <div class="product-badge">Popular</div>
+            </div>
+            <div class="product-details">
+                <div class="detail-box">
+                    <div class="detail-label">Investment</div>
+                    <div class="detail-value">$1,000</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Daily Return</div>
+                    <div class="detail-value highlight">3.5%</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Duration</div>
+                    <div class="detail-value">90 Days</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Total Return</div>
+                    <div class="detail-value">$3,150</div>
+                </div>
+            </div>
+            <div class="product-desc">
+                Stable returns with low risk. Perfect for beginners looking to grow their wealth steadily.
+            </div>
+            <button class="btn" onclick="invest('Premium', 1000)">Invest Now</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-name">Gold Plan</div>
+                <div class="product-badge">Best Value</div>
+            </div>
+            <div class="product-details">
+                <div class="detail-box">
+                    <div class="detail-label">Investment</div>
+                    <div class="detail-value">$5,000</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Daily Return</div>
+                    <div class="detail-value highlight">4.2%</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Duration</div>
+                    <div class="detail-value">120 Days</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Total Return</div>
+                    <div class="detail-value">$25,200</div>
+                </div>
+            </div>
+            <div class="product-desc">
+                Enhanced returns with moderate risk. Ideal for experienced investors seeking better yields.
+            </div>
+            <button class="btn" onclick="invest('Gold', 5000)">Invest Now</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-name">Platinum Plan</div>
+                <div class="product-badge">Exclusive</div>
+            </div>
+            <div class="product-details">
+                <div class="detail-box">
+                    <div class="detail-label">Investment</div>
+                    <div class="detail-value">$10,000</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Daily Return</div>
+                    <div class="detail-value highlight">5.0%</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Duration</div>
+                    <div class="detail-value">150 Days</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Total Return</div>
+                    <div class="detail-value">$75,000</div>
+                </div>
+            </div>
+            <div class="product-desc">
+                Premium returns with exclusive benefits. For serious investors ready to maximize earnings.
+            </div>
+            <button class="btn" onclick="invest('Platinum', 10000)">Invest Now</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="vip.html" class="nav-item">
+            <div class="nav-icon">👑</div>
+            <div class="nav-label">VIP</div>
+        </a>
+        <a href="team.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="mine.html" class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Mine</div>
+        </a>
+    </div>
+
+    <script>
+        function invest(plan, amount) {
+            if (confirm(`Invest in ${plan} Plan for $${amount}?`)) {
+                localStorage.setItem('selectedPlan', plan);
+                localStorage.setItem('investmentAmount', amount);
+                window.location.href = 'recharge.html';
+            }
+        }
+    </script>
+</body>
+</html>

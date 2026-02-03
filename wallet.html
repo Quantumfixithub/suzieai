@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .wallet-card {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(10, 22, 40, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-card::after {
+            content: '💼';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 100px;
+            opacity: 0.1;
+        }
+
+        .wallet-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .wallet-balance {
+            font-size: 48px;
+            font-weight: 700;
+            color: #D4AF37;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-usd {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+        }
+
+        .wallet-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .wallet-btn:hover {
+            background: #D4AF37;
+            color: #0A1628;
+            transform: translateY(-2px);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .quick-action {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .quick-action-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .quick-action-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #0A1628;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .transaction-icon.deposit {
+            background: rgba(76, 217, 100, 0.1);
+        }
+
+        .transaction-icon.withdraw {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .transaction-icon.transfer {
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .transaction-details h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 3px;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .transaction-amount.positive {
+            color: #4cd964;
+        }
+
+        .transaction-amount.negative {
+            color: #ff6b6b;
+        }
+
+        .see-all {
+            text-align: center;
+            padding: 15px;
+            color: #D4AF37;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #0A1628;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 8px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #D4AF37;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .wallet-balance {
+                font-size: 40px;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+
+            .quick-action {
+                padding: 15px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="mine.html" class="back-btn">←</a>
+        <div class="header-title">Wallet</div>
+    </div>
+
+    <div class="container">
+        <div class="wallet-card">
+            <div class="wallet-label">Available Balance</div>
+            <div class="wallet-balance" id="walletBalance">$0.00</div>
+            <div class="wallet-usd">≈ 0.00 USD</div>
+            <div class="wallet-actions">
+                <a href="recharge.html" class="wallet-btn">💳 Deposit</a>
+                <a href="withdraw.html" class="wallet-btn">💰 Withdraw</a>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <a href="recharge.html" class="quick-action">
+                <div class="quick-action-icon">💳</div>
+                <div class="quick-action-label">Deposit</div>
+            </a>
+            <a href="withdraw.html" class="quick-action">
+                <div class="quick-action-icon">💸</div>
+                <div class="quick-action-label">Withdraw</div>
+            </a>
+            <a href="records.html" class="quick-action">
+                <div class="quick-action-icon">📝</div>
+                <div class="quick-action-label">Records</div>
+            </a>
+            <a href="bank-info.html" class="quick-action">
+                <div class="quick-action-icon">🏦</div>
+                <div class="quick-action-label">Bank</div>
+            </a>
+        </div>
+
+        <div class="info-box">
+            💡 <strong>Tip:</strong> Keep funds in your wallet for quick investments and instant withdrawals.
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Recent Transactions</h3>
+
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon deposit">💰</div>
+                    <div class="transaction-details">
+                        <h4>Deposit</h4>
+                        <p>Bank Transfer • Today, 10:30 AM</p>
+                    </div>
+                </div>
+                <div class="transaction-amount positive">+$500.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon withdraw">💸</div>
+                    <div class="transaction-details">
+                        <h4>Withdrawal</h4>
+                        <p>To Bank Account • Yesterday, 3:15 PM</p>
+                    </div>
+                </div>
+                <div class="transaction-amount negative">-$200.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon transfer">📊</div>
+                    <div class="transaction-details">
+                        <h4>Investment</h4>
+                        <p>VIP Level 1 • Yesterday, 9:00 AM</p>
+                    </div>
+                </div>
+                <div class="transaction-amount negative">-$100.00</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon deposit">💰</div>
+                    <div class="transaction-details">
+                        <h4>Returns</h4>
+                        <p>Daily Profit • 2 days ago</p>
+                    </div>
+                </div>
+                <div class="transaction-amount positive">+$5.50</div>
+            </div>
+
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon deposit">🎁</div>
+                    <div class="transaction-details">
+                        <h4>Referral Bonus</h4>
+                        <p>From team member • 2 days ago</p>
+                    </div>
+                </div>
+                <div class="transaction-amount positive">+$8.00</div>
+            </div>
+
+            <a href="records.html" class="see-all">View All Transactions →</a>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Wallet Security</h3>
+            <div class="info-box">
+                🔒 Your wallet is protected by multi-layer security including encryption, 2FA, and secure authentication.
+            </div>
+            <a href="security.html" style="display: block; text-align: center; color: #D4AF37; text-decoration: none; font-weight: 600;">Manage Security Settings →</a>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="vip.html" class="nav-item">
+            <div class="nav-icon">👑</div>
+            <div class="nav-label">VIP</div>
+        </a>
+        <a href="team.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="mine.html" class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Mine</div>
+        </a>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            loadWalletData();
+        });
+
+        async function loadWalletData() {
+            // Simulate API call
+            const mockData = {
+                balance: 1250.75
+            };
+
+            document.getElementById('walletBalance').textContent = '$' + mockData.balance.toFixed(2);
+        }
+    </script>
+</body>
+</html>

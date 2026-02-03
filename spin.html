@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Spin - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; padding-bottom: 20px; }
+        .header { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: none; border: none; color: #D4AF37; font-size: 24px; cursor: pointer; text-decoration: none; }
+        .header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #D4AF37; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+        .spins-left { background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%); border-radius: 12px; padding: 15px; margin-bottom: 25px; }
+        .spins-number { font-size: 36px; font-weight: 700; color: #0A1628; font-family: 'Cormorant Garamond', serif; }
+        .spins-label { font-size: 14px; color: #0A1628; opacity: 0.8; }
+        .wheel-container { position: relative; width: 300px; height: 300px; margin: 0 auto 30px; }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, #D4AF37 0deg 45deg, #F4E4A6 45deg 90deg, #D4AF37 90deg 135deg, #F4E4A6 135deg 180deg, #D4AF37 180deg 225deg, #F4E4A6 225deg 270deg, #D4AF37 270deg 315deg, #F4E4A6 315deg 360deg); border: 8px solid #0A1628; display: flex; align-items: center; justify-content: center; transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+        .wheel-center { width: 60px; height: 60px; background: #0A1628; border-radius: 50%; border: 4px solid #D4AF37; display: flex; align-items: center; justify-content: center; color: #D4AF37; font-size: 24px; font-weight: 700; }
+        .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #ff6b6b; z-index: 10; }
+        .spin-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%); border: none; border-radius: 12px; color: #0A1628; font-size: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .spin-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
+        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .prizes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+        .prize-box { padding: 12px; background: rgba(212, 175, 55, 0.05); border-radius: 8px; font-size: 12px; }
+        .prize-value { font-weight: 700; color: #D4AF37; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <div class="header-title">Lucky Spin</div>
+    </div>
+
+    <div class="container">
+        <div class="spins-left">
+            <div class="spins-number" id="spinsLeft">3</div>
+            <div class="spins-label">Spins Available</div>
+        </div>
+
+        <div class="card">
+            <div class="wheel-container">
+                <div class="wheel-pointer"></div>
+                <div class="wheel" id="wheel">
+                    <div class="wheel-center">🎰</div>
+                </div>
+            </div>
+
+            <button class="spin-btn" id="spinBtn" onclick="spin()">SPIN NOW</button>
+
+            <div class="prizes-grid">
+                <div class="prize-box">
+                    <div class="prize-value">$1</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">$5</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">$10</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">$20</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">$50</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">$100</div>
+                    <div>Cash</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">Free</div>
+                    <div>Spin</div>
+                </div>
+                <div class="prize-box">
+                    <div class="prize-value">Better</div>
+                    <div>Luck</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let spins = 3;
+        let spinning = false;
+
+        function spin() {
+            if (spinning || spins <= 0) return;
+            
+            spinning = true;
+            spins--;
+            document.getElementById('spinsLeft').textContent = spins;
+            document.getElementById('spinBtn').disabled = true;
+
+            const wheel = document.getElementById('wheel');
+            const prizes = [1, 5, 10, 20, 50, 100, 0, -1];
+            const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            const rotation = 1800 + (Math.random() * 360);
+            
+            wheel.style.transform = `rotate(${rotation}deg)`;
+
+            setTimeout(() => {
+                spinning = false;
+                document.getElementById('spinBtn').disabled = spins <= 0;
+                
+                if (randomPrize > 0) {
+                    alert(`🎉 Congratulations! You won $${randomPrize}!`);
+                } else if (randomPrize === 0) {
+                    alert('🎁 You won a free spin!');
+                    spins++;
+                    document.getElementById('spinsLeft').textContent = spins;
+                    document.getElementById('spinBtn').disabled = false;
+                } else {
+                    alert('Better luck next time!');
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

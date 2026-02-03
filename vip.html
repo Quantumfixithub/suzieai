@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Levels - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro-card {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-card::after {
+            content: '👑';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 120px;
+            opacity: 0.05;
+        }
+
+        .intro-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .intro-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #D4AF37;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 10px;
+        }
+
+        .intro-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .vip-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .vip-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .vip-card.level-1 { border-left-color: #8B4513; }
+        .vip-card.level-2 { border-left-color: #C0C0C0; }
+        .vip-card.level-3 { border-left-color: #FFD700; }
+        .vip-card.level-4 { border-left-color: #00CED1; }
+        .vip-card.level-5 { border-left-color: #FF69B4; }
+        .vip-card.level-6 { border-left-color: #9370DB; }
+        .vip-card.level-7 { border-left-color: #FF6347; }
+        .vip-card.level-8 { border-left-color: #32CD32; }
+        .vip-card.level-9 { border-left-color: #FF8C00; }
+        .vip-card.level-10 { border-left-color: #DC143C; }
+
+        .vip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .vip-level {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vip-icon {
+            font-size: 28px;
+        }
+
+        .vip-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0A1628;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .vip-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #D4AF37;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .vip-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .vip-detail {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .vip-detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .vip-detail-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0A1628;
+        }
+
+        .vip-detail-value.highlight {
+            color: #4cd964;
+        }
+
+        .vip-benefits {
+            margin-bottom: 15px;
+        }
+
+        .vip-benefits h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 8px;
+        }
+
+        .vip-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .vip-benefits li {
+            font-size: 13px;
+            color: #666;
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .vip-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4cd964;
+            font-weight: 700;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%);
+            border: none;
+            border-radius: 12px;
+            color: #0A1628;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #0A1628;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 8px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #D4AF37;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .vip-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <div class="header-title">VIP Levels</div>
+    </div>
+
+    <div class="container">
+        <div class="intro-card">
+            <div class="intro-icon">👑</div>
+            <div class="intro-title">Choose Your VIP Level</div>
+            <div class="intro-subtitle">Higher levels unlock better daily returns and exclusive benefits</div>
+        </div>
+
+        <div class="info-box">
+            💡 <strong>How it works:</strong> Invest in a VIP level and receive daily returns for the duration. Returns are automatically credited to your balance.
+        </div>
+
+        <!-- VIP Level 1 -->
+        <div class="vip-card level-1" onclick="selectVIP(1)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">🥉</div>
+                    <div class="vip-name">VIP 1</div>
+                </div>
+                <div class="vip-amount">$100</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">5.5%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">30 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$165</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$65</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>Daily automated returns</li>
+                    <li>24/7 customer support</li>
+                    <li>Referral commissions</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 1</button>
+        </div>
+
+        <!-- VIP Level 2 -->
+        <div class="vip-card level-2" onclick="selectVIP(2)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">🥈</div>
+                    <div class="vip-name">VIP 2</div>
+                </div>
+                <div class="vip-amount">$500</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">6.0%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">35 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$1,050</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$550</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 1 benefits</li>
+                    <li>Priority withdrawals</li>
+                    <li>Exclusive market insights</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 2</button>
+        </div>
+
+        <!-- VIP Level 3 -->
+        <div class="vip-card level-3" onclick="selectVIP(3)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">🥇</div>
+                    <div class="vip-name">VIP 3</div>
+                </div>
+                <div class="vip-amount">$1,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">6.5%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">40 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$2,600</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$1,600</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 2 benefits</li>
+                    <li>Dedicated account manager</li>
+                    <li>Higher referral rates</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 3</button>
+        </div>
+
+        <!-- VIP Level 4 -->
+        <div class="vip-card level-4" onclick="selectVIP(4)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">💎</div>
+                    <div class="vip-name">VIP 4</div>
+                </div>
+                <div class="vip-amount">$3,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">7.0%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">45 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$9,450</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$6,450</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 3 benefits</li>
+                    <li>VIP-only investment opportunities</li>
+                    <li>Premium support 24/7</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 4</button>
+        </div>
+
+        <!-- VIP Level 5 -->
+        <div class="vip-card level-5" onclick="selectVIP(5)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">💰</div>
+                    <div class="vip-name">VIP 5</div>
+                </div>
+                <div class="vip-amount">$5,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">7.5%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">50 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$18,750</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$13,750</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 4 benefits</li>
+                    <li>Monthly strategy calls</li>
+                    <li>Early access to new products</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 5</button>
+        </div>
+
+        <!-- VIP Level 6 -->
+        <div class="vip-card level-6" onclick="selectVIP(6)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">⭐</div>
+                    <div class="vip-name">VIP 6</div>
+                </div>
+                <div class="vip-amount">$10,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">8.0%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">55 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$44,000</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$34,000</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 5 benefits</li>
+                    <li>Personalized investment portfolio</li>
+                    <li>Exclusive events access</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 6</button>
+        </div>
+
+        <!-- VIP Level 7 -->
+        <div class="vip-card level-7" onclick="selectVIP(7)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">🌟</div>
+                    <div class="vip-name">VIP 7</div>
+                </div>
+                <div class="vip-amount">$20,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">8.5%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">60 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$102,000</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$82,000</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 6 benefits</li>
+                    <li>Private investment opportunities</li>
+                    <li>Tax optimization consulting</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 7</button>
+        </div>
+
+        <!-- VIP Level 8 -->
+        <div class="vip-card level-8" onclick="selectVIP(8)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">🏆</div>
+                    <div class="vip-name">VIP 8</div>
+                </div>
+                <div class="vip-amount">$50,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">9.0%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">65 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$292,500</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$242,500</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 7 benefits</li>
+                    <li>Wealth management services</li>
+                    <li>Annual performance bonus</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 8</button>
+        </div>
+
+        <!-- VIP Level 9 -->
+        <div class="vip-card level-9" onclick="selectVIP(9)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">👑</div>
+                    <div class="vip-name">VIP 9</div>
+                </div>
+                <div class="vip-amount">$100,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">9.5%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">70 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$665,000</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$565,000</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 8 benefits</li>
+                    <li>Executive board access</li>
+                    <li>Concierge service</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 9</button>
+        </div>
+
+        <!-- VIP Level 10 -->
+        <div class="vip-card level-10" onclick="selectVIP(10)">
+            <div class="vip-header">
+                <div class="vip-level">
+                    <div class="vip-icon">💫</div>
+                    <div class="vip-name">VIP 10</div>
+                </div>
+                <div class="vip-amount">$200,000</div>
+            </div>
+            <div class="vip-details">
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Daily Return</div>
+                    <div class="vip-detail-value highlight">10.0%</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Duration</div>
+                    <div class="vip-detail-value">75 Days</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Total Return</div>
+                    <div class="vip-detail-value">$1,500,000</div>
+                </div>
+                <div class="vip-detail">
+                    <div class="vip-detail-label">Net Profit</div>
+                    <div class="vip-detail-value highlight">$1,300,000</div>
+                </div>
+            </div>
+            <div class="vip-benefits">
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>All VIP 9 benefits</li>
+                    <li>Equity partnership opportunities</li>
+                    <li>Lifetime premium membership</li>
+                </ul>
+            </div>
+            <button class="btn">Purchase VIP 10</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="vip.html" class="nav-item active">
+            <div class="nav-icon">👑</div>
+            <div class="nav-label">VIP</div>
+        </a>
+        <a href="team.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="mine.html" class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Mine</div>
+        </a>
+    </div>
+
+    <script>
+        function selectVIP(level) {
+            const confirmed = confirm(`Purchase VIP Level ${level}?\n\nYou will be redirected to the payment page.`);
+            
+            if (confirmed) {
+                // Store selected VIP level
+                localStorage.setItem('selectedVIPLevel', level);
+                
+                // Redirect to recharge page
+                window.location.href = 'recharge.html';
+            }
+        }
+    </script>
+</body>
+</html>

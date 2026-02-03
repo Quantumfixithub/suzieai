@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Transfer A - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 20px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .bank-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .bank-detail:last-child {
+            border-bottom: none;
+        }
+
+        .bank-detail-label {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .bank-detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0A1628;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #D4AF37;
+            color: #0A1628;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #D4AF37;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: #fff;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: #333;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%);
+            border: none;
+            border-radius: 12px;
+            color: #0A1628;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .info-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #0A1628;
+        }
+
+        .steps {
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: #D4AF37;
+            color: #0A1628;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step h4 {
+            color: #0A1628;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="recharge.html" class="back-btn">←</a>
+        <div class="header-title">Bank Transfer A</div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">Bank Account Details</h2>
+
+            <div class="bank-detail">
+                <span class="bank-detail-label">Bank Name</span>
+                <span class="bank-detail-value">
+                    ABC Global Bank
+                    <button class="copy-btn" onclick="copy('ABC Global Bank')">Copy</button>
+                </span>
+            </div>
+
+            <div class="bank-detail">
+                <span class="bank-detail-label">Account Name</span>
+                <span class="bank-detail-value">
+                    SUZIAI Holdings Ltd
+                    <button class="copy-btn" onclick="copy('SUZIAI Holdings Ltd')">Copy</button>
+                </span>
+            </div>
+
+            <div class="bank-detail">
+                <span class="bank-detail-label">Account Number</span>
+                <span class="bank-detail-value">
+                    1234567890123
+                    <button class="copy-btn" onclick="copy('1234567890123')">Copy</button>
+                </span>
+            </div>
+
+            <div class="bank-detail">
+                <span class="bank-detail-label">SWIFT Code</span>
+                <span class="bank-detail-value">
+                    ABCGUS33XXX
+                    <button class="copy-btn" onclick="copy('ABCGUS33XXX')">Copy</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">How to Deposit</h2>
+            <div class="steps">
+                <div class="step">
+                    <h4>Transfer to our bank account</h4>
+                    <p>Use the details above to make a bank transfer</p>
+                </div>
+                <div class="step">
+                    <h4>Enter deposit amount</h4>
+                    <p>Fill in the exact amount you transferred</p>
+                </div>
+                <div class="step">
+                    <h4>Upload payment proof</h4>
+                    <p>Take a screenshot of the successful transaction</p>
+                </div>
+                <div class="step">
+                    <h4>Submit for verification</h4>
+                    <p>We'll credit your account within 30 minutes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Submit Deposit</h2>
+
+            <form id="depositForm">
+                <div class="form-group">
+                    <label for="amount">Deposit Amount ($)</label>
+                    <input type="number" id="amount" placeholder="Enter amount" min="10" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="proof">Upload Payment Proof</label>
+                    <input type="file" id="proof" accept="image/*" required>
+                </div>
+
+                <div class="info-box">
+                    💡 Make sure your payment proof shows:<br>
+                    • Transaction amount<br>
+                    • Transaction date & time<br>
+                    • Recipient account details
+                </div>
+
+                <button type="submit" class="btn">Submit Deposit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function copy(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied: ' + text);
+            });
+        }
+
+        document.getElementById('depositForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Deposit submitted! Processing...');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

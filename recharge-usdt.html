@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT Payment - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; padding-bottom: 20px; }
+        .header { background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: none; border: none; color: #D4AF37; font-size: 24px; cursor: pointer; text-decoration: none; }
+        .header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #D4AF37; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .card { background: #fff; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .section-title { font-size: 20px; font-weight: 600; color: #0A1628; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; text-align: center; }
+        .qr-code { text-align: center; margin: 25px 0; }
+        .qr-image { width: 200px; height: 200px; background: #f0f0f0; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 80px; }
+        .wallet-address { background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 10px; word-break: break-all; font-family: monospace; font-size: 13px; text-align: center; margin: 20px 0; }
+        .copy-btn { width: 100%; padding: 12px; background: rgba(212, 175, 55, 0.1); border: 2px solid #D4AF37; color: #D4AF37; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .copy-btn:hover { background: #D4AF37; color: #0A1628; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #D4AF37; font-size: 14px; font-weight: 500; }
+        input { width: 100%; padding: 14px 18px; background: #fff; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; color: #333; font-size: 14px; font-family: 'Montserrat', sans-serif; }
+        input:focus { outline: none; border-color: #D4AF37; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 100%); border: none; border-radius: 12px; color: #0A1628; font-size: 16px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
+        .info-box { background: rgba(212, 175, 55, 0.1); border-left: 4px solid #D4AF37; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 13px; color: #0A1628; }
+        .network-badge { background: #4cd964; color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="recharge.html" class="back-btn">←</a>
+        <div class="header-title">USDT Payment</div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div style="text-align: center;">
+                <span class="network-badge">TRC20 Network</span>
+            </div>
+            <h2 class="section-title">Scan QR Code to Pay</h2>
+
+            <div class="qr-code">
+                <div class="qr-image">📱</div>
+                <p style="margin-top: 15px; color: #999; font-size: 13px;">Scan with your crypto wallet app</p>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0; color: #999; font-size: 14px;">OR</div>
+
+            <h3 style="font-size: 16px; font-weight: 600; color: #0A1628; margin-bottom: 10px;">Copy Wallet Address:</h3>
+            <div class="wallet-address" id="walletAddress">
+                TRX7n4VkxxxxxxxxxxxxxxxxxxxxxxxxxX
+            </div>
+            <button class="copy-btn" onclick="copyAddress()">📋 Copy Address</button>
+
+            <div class="info-box">
+                <strong>⚠️ Important:</strong><br>
+                • Only send USDT (TRC20) to this address<br>
+                • Minimum deposit: 10 USDT<br>
+                • Requires 1 network confirmation<br>
+                • Credited within 10-30 minutes
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Confirm Payment</h2>
+
+            <form id="usdtForm">
+                <div class="form-group">
+                    <label for="amount">Amount Sent (USDT)</label>
+                    <input type="number" id="amount" placeholder="Enter USDT amount" min="10" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="txid">Transaction ID (TxID)</label>
+                    <input type="text" id="txid" placeholder="Enter transaction hash" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="proof">Upload Screenshot (Optional)</label>
+                    <input type="file" id="proof" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn">Submit Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function copyAddress() {
+            const address = document.getElementById('walletAddress').textContent.trim();
+            navigator.clipboard.writeText(address).then(() => {
+                alert('Wallet address copied!');
+            });
+        }
+
+        document.getElementById('usdtForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Payment submitted! Processing...');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

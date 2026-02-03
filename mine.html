@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SUZIAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2942 100%);
+            color: #fff;
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+
+        .settings-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #D4AF37;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .settings-icon:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.1);
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #D4AF37, #F4E4A6);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .user-id {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .vip-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4AF37, #F4E4A6);
+            color: #0A1628;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 12px;
+            padding-left: 5px;
+        }
+
+        .menu-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            text-decoration: none;
+            color: #333;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(244, 228, 166, 0.1));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            color: #0A1628;
+            margin-bottom: 3px;
+            font-size: 15px;
+        }
+
+        .menu-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .menu-arrow {
+            color: #D4AF37;
+            font-size: 18px;
+        }
+
+        .logout-item {
+            color: #ff6b6b;
+        }
+
+        .logout-item .menu-icon {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .logout-item .menu-title {
+            color: #ff6b6b;
+        }
+
+        .logout-item .menu-arrow {
+            color: #ff6b6b;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 8px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #D4AF37;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                gap: 8px;
+            }
+
+            .stat-box {
+                padding: 12px 8px;
+            }
+
+            .menu-item {
+                padding: 15px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-title">My Profile</div>
+            <a href="settings.html" class="settings-icon">⚙️</a>
+        </div>
+
+        <div class="profile-card">
+            <div class="avatar">👤</div>
+            <div class="user-name" id="userName">Member</div>
+            <div class="user-id">ID: <span id="userId">12345</span></div>
+            <div class="vip-badge">👑 VIP Level 1</div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="balance">$0</div>
+                    <div class="stat-label">Balance</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="profit">$0</div>
+                    <div class="stat-label">Profit</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="team">0</div>
+                    <div class="stat-label">Team</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h3 class="section-title">Account Management</h3>
+            <div class="menu-card">
+                <a href="account-info.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">👤</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Account Information</div>
+                            <div class="menu-subtitle">View your profile details</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="balance.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">💰</div>
+                        <div class="menu-text">
+                            <div class="menu-title">My Balance</div>
+                            <div class="menu-subtitle">View earnings and transactions</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="wallet.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">💼</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Wallet</div>
+                            <div class="menu-subtitle">Manage your funds</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="bank-info.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🏦</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Bank Information</div>
+                            <div class="menu-subtitle">Add or update bank details</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Security & Settings</h3>
+            <div class="menu-card">
+                <a href="security.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🔒</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Security</div>
+                            <div class="menu-subtitle">2FA, biometric, login alerts</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="kyc.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">✅</div>
+                        <div class="menu-text">
+                            <div class="menu-title">KYC Verification</div>
+                            <div class="menu-subtitle">Verify your identity</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="change-password.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🔑</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Change Password</div>
+                            <div class="menu-subtitle">Update your password</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="language.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🌐</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Language</div>
+                            <div class="menu-subtitle">Change app language</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Support & Information</h3>
+            <div class="menu-card">
+                <a href="help.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">❓</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Help & Support</div>
+                            <div class="menu-subtitle">Get assistance</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="faq.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">💬</div>
+                        <div class="menu-text">
+                            <div class="menu-title">FAQ</div>
+                            <div class="menu-subtitle">Frequently asked questions</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="about.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">ℹ️</div>
+                        <div class="menu-text">
+                            <div class="menu-title">About SUZIAI</div>
+                            <div class="menu-subtitle">Learn about us</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+
+                <a href="download.html" class="menu-item">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">📱</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Download App</div>
+                            <div class="menu-subtitle">Get mobile apps</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="menu-card">
+                <div class="menu-item logout-item" onclick="logout()">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🚪</div>
+                        <div class="menu-text">
+                            <div class="menu-title">Logout</div>
+                            <div class="menu-subtitle">Sign out of your account</div>
+                        </div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="vip.html" class="nav-item">
+            <div class="nav-icon">👑</div>
+            <div class="nav-label">VIP</div>
+        </a>
+        <a href="team.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="mine.html" class="nav-item active">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Mine</div>
+        </a>
+    </div>
+
+    <script>
+        // Load user data
+        window.addEventListener('load', function() {
+            const authToken = localStorage.getItem('authToken');
+            if (!authToken) {
+                // window.location.href = 'login.html';
+                // return;
+            }
+
+            // Load user data
+            const userName = localStorage.getItem('userName') || 'Member';
+            const userId = localStorage.getItem('userId') || '12345';
+
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userId').textContent = userId;
+
+            // Load stats (mock data)
+            loadUserStats();
+        });
+
+        async function loadUserStats() {
+            // Simulate API call
+            const mockData = {
+                balance: 1250.75,
+                profit: 890.25,
+                team: 12
+            };
+
+            document.getElementById('balance').textContent = '$' + mockData.balance.toFixed(2);
+            document.getElementById('profit').textContent = '$' + mockData.profit.toFixed(2);
+            document.getElementById('team').textContent = mockData.team;
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('userName');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
